@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/issues', 'IssuesController@index');
+Route::get('/issues/view', 'IssuesController@detail');
+
+Route::get('fill', function(){
+     $ag = new \Github\BugAggregator();
+
+     $ag->run()->compare();
+
+     return response()->json(['message', 'ok', 'new_bugs' => $ag->bugs]);
 });
