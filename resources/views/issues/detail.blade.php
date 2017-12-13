@@ -1,5 +1,6 @@
 @extends('layout')
-@section('title', 'View issue')
+
+@section('title', '#' .$issue->number . ' ' . $issue->title)
 
 @section('content')
     <div class="col-md-8 col-md-offset-2">
@@ -9,7 +10,7 @@
 
             <a class="btn btn-primary" target="_blank" href="{{$issue->html_url}}"><i class="fa fa-github"></i> View on GH</a>
 
-            @foreach($issue->labels as $label) <span class="btn" style="background: #{{$label->color}}; margin-left: 10px; float-right;">{{$label->name}} </span> @endforeach
+            @foreach($issue->labels as $label) <span class="btn" style="background: #{{$label->color}}; color: #fff; margin-left: 10px; float-right;">{{$label->name}} </span> @endforeach
 
         </div>
 
@@ -29,8 +30,8 @@
 
         <hr>
 
-        @if(!is_null($comments))
-            @foreach($comments as $comment)
+        @if($issue->comments != 0)
+            @foreach($issue->comments as $comment)
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="panel-title"><strong>{{$comment->user->login}}</strong></span>

@@ -11,13 +11,36 @@
 |
 */
 
-Route::get('/issues', 'IssuesController@index');
 Route::get('/issues/view', 'IssuesController@detail');
+Route::get('/issues/close', 'IssuesController@close');
+Route::get('/issues', 'IssuesController@index');
 
-Route::get('fill', function(){
-     $ag = new \Github\BugAggregator();
+Route::get('fill', function ()
+{
+    $ag = new \Github\BugAggregator();
 
-     $ag->run()->compare();
+    $ag->run()->compare();
 
-     return response()->json(['message', 'ok', 'new_bugs' => $ag->bugs]);
+    return response()->json(['message', 'ok', 'new_bugs' => $ag->bugs]);
 });
+
+Route::get('invoices', 'InvoicesController@index');
+Route::post('invoices/upload', 'InvoicesController@upload');
+Route::get('invoices/download', 'InvoicesController@download');
+
+
+Route::get('/messages/create', 'MessagesController@create');
+Route::post('/messages/store', 'MessagesController@store');
+
+Route::get('convert/{mpg}', function($mpg) {
+    $kpg = $mpg*1.609344;
+    $kpl = $kpg/3.78541178;
+
+    return number_format($kpl, 2) . ' km/l';
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('map', 'MapController@index');

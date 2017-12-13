@@ -8,74 +8,74 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
+use App\Repositories\IssueRepository;
 
 class IssuesController
 {
-    public function index()
+    public function index(IssueRepository $issues)
     {
-        $client = new Client();
+        $page = (!is_null(request()->get('page')))? '?' .request()->getQueryString() : '?page=1';
 
-        $headers = [
-            'Authorization' => 'Bearer ' . env('GITHUB_ACCESS_TOKEN')
-        ];
-
-        $response = $client->request(
-            'GET',
-            'https://api.github.com/issues',
-            ['headers' => $headers]
-        );
+        $response = $issues->all($page);
 
         $issues = json_decode($response->getBody());
+        $links = $response->getHeaders()['Link'];
 
-        return view('issues.index', compact('issues'));
+        $raw = explode(',', $links[0]);
+
+        $pagination = [];
+
+        $count = 0;
+        foreach($raw as $link)
+        {
+
+            $pagination[$count] = [];
+            $href = str_replace('<' , '', $link);
+            $href = str_replace('>' , '', $href);
+//            dd($href);
+
+            $url = trim(substr($href, 0, strpos($href,';')));
+//            dd($url);
+            $url = substr($url, strpos($url, '?'));
+
+            $title = trim(substr($href, strpos($href,'rel=')));
+            $title = explode('="', $title);
+            $title = str_replace('"', '', $title[1]);
+
+            $pagination[$count]['url'] = $url;
+            $pagination[$count]['title'] = $title;
+
+            $count++;
+        }
+
+        return view('issues.index', compact('issues', 'pagination'));
     }
 
-    public function detail()
+    public function detail(IssueRepository $issues)
     {
-        $owner = request()->get('owner');
-        $repo = request()->get('repo');
-        $issue = request()->get('issue_nr');
+        $issue = $issues->detail();
 
-        $client = new Client();
 
-        $headers = [
-            'Authorization' => 'Bearer ' . env('GITHUB_ACCESS_TOKEN')
-        ];
-
-        $response = $client->request(
-            'GET',
-            'https://api.github.com/repos/' . $owner . '/' . $repo. '/issues/' .$issue,
-            ['headers' => $headers]
-        );
-
-        $issue = json_decode($response->getBody());
-
-        $comments = null;
-
-        if($issue->comments > 0)
+        foreach($issue->labels as $l)
         {
-            $response2 = $client->request(
-                'GET',
-                $issue->comments_url,
-                ['headers' => $headers]
-            );
-
-            $comments = $response2->getBody();
-            $str = '';
-
-            while(!$comments->eof())
+            if((int)$l->color < (0xffffff/1))
             {
-                $str .= $comments->read(1024);
+                $l->text_color = 'fff';
             }
-
-            $comments = json_decode($str);
+            else {
+                $l->text_color = '000';
+            }
         }
 
 
-//        dd($comments[1]->user);
+        return view('issues.detail', compact('issue'));
 
-        return view('issues.detail', compact('issue', 'comments'));
+    }
 
+    public function close(IssueRepository $issues)
+    {
+        $issue = $issues->close();
+
+        return redirect('/issues');
     }
 }
