@@ -44,3 +44,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('map', 'MapController@index');
+
+Route::get('editor', function(){
+    return view('editor');
+});
+
+Route::post('editor', function(\Illuminate\Http\Request $request){
+    $page = new App\Page;
+
+    $page->content = $request->get('editor');
+    $page->title = 'This is a test page';
+    $page->slug = 'test-page';
+
+    $page->save();
+});
+
+Route::get('page/{slug}', function($slug){
+    $page = \App\Page::where('slug', $slug)->first();
+
+    return view('page', compact('page'));
+});

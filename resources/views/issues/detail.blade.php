@@ -10,6 +10,8 @@
 
             <a class="btn btn-primary" target="_blank" href="{{$issue->html_url}}"><i class="fa fa-github"></i> View on GH</a>
 
+            <a class="btn btn-danger close-issue" href="/issues/close?owner={{request()->get('owner')}}&repo={{request()->get('repo')}}&issue_nr={{$issue->number}}"><i class="fa fa-lock"></i> close</a>
+
             @foreach($issue->labels as $label) <span class="btn" style="background: #{{$label->color}}; color: #fff; margin-left: 10px; float-right;">{{$label->name}} </span> @endforeach
 
         </div>
@@ -24,7 +26,8 @@
                 <span class="text-muted text"> on {{Carbon\Carbon::parse($issue->created_at)->format('F d Y')}}</span>
             </div>
             <div class="panel-body">
-                {!! nl2br($issue->body) !!}
+                {!! \Michelf\Markdown::defaultTransform($issue->body) !!}
+                {{--{!! nl2br($issue->body) !!}--}}
             </div>
         </div>
 
@@ -38,7 +41,7 @@
                         <span class="text-muted"> on {{Carbon\Carbon::parse($comment->created_at)->format('F d Y')}}</span>
                     </div>
                     <div class="panel-body">
-                        {!! nl2br($comment->body) !!}
+                        {!! \Michelf\Markdown::defaultTransform(nl2br($comment->body)) !!}
                     </div>
                 </div>
 
