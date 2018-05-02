@@ -75,3 +75,16 @@ Route::prefix('projects')->namespace('Projects')->group(function(){
     Route::get('/create/delete/{id}', 'ProjectsController@delete');
 
 });
+
+Route::prefix('tasks')->group(function(){
+
+    Route::get('/', 'TasksController@index');
+    Route::get('/create', 'TasksController@create');
+    Route::post('/store', 'TasksController@store');
+    Route::get('/edit/{id}', 'TasksController@edit');
+    Route::put('/update', 'TasksController@update');
+    Route::get('/create/delete/{id}', 'TasksController@delete');
+
+    route::get('solve/{id}', 'TasksController@solveTask');
+
+});

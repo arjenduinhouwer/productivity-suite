@@ -7,34 +7,47 @@
             box-sizing: border-box;
         }
     </style>
-    <div class="col-md-6 col-md-offset-3">
 
-        <h1 class="page-header">Projects</h1>
 
-        <div id="timeline" style="height: 180px;"></div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <h1 class="page-header">Projects</h1>
 
-        <a class="btn btn-primary" href="/projects/create">Create</a>
+            <a type="button" class="btn btn-primary" href="/projects/create">Create</a>
+        </div>
+    </div>
 
-        <hr>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <div id="timeline" style="height: 180px; width: 100%;"></div>
+        </div>
+    </div>
 
-        @foreach($projects as $project)
-            <div class="col-md-12" style="border: 1px solid #e2e2e2; margin-bottom: 10px; padding-bottom: 5px;">
-                <div class="col-md-6">
-                    <h3>{{$project->name}}</h3>
-                </div>
-                <div class="col-md-6">
-                    <p>&nbsp;</p>
-                    <p>From: {{Carbon\Carbon::parse($project->start)->format('d M Y')}} until: {{Carbon\Carbon::parse($project->end)->format('d M Y')}}
-                        <br>
-                        Hours: {{$project->hours}}
-                    </p>
-                </div>
 
-                <div class="col-md-12 text-right">
-                    <a href="/projects/edit/{{$project->id}}">Edit</a> | <a href="/projects/delete/{{$project->id}}">Delete</a>
-                </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <div class="row">
+                @foreach($projects as $project)
+                    <div class="col-md-12" style="border: 1px solid #e2e2e2; margin-bottom: 10px; padding-bottom: 5px;">
+                        <div class="col-md-6">
+                            <h3>{{$project->name}}</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <p>&nbsp;</p>
+                            <p>From: {{Carbon\Carbon::parse($project->start)->format('d M Y')}} until: {{Carbon\Carbon::parse($project->end)->format('d M Y')}}
+                                <br>
+                                Hours: {{$project->hours}}
+                            </p>
+                        </div>
+
+                        <div class="col-md-12 text-right">
+                            <a href="/projects/edit/{{$project->id}}">Edit</a> | <a href="/projects/delete/{{$project->id}}">Delete</a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        @endforeach
+        </div>
+
     </div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
