@@ -64,3 +64,14 @@ Route::get('page/{slug}', function($slug){
 
     return view('page', compact('page'));
 });
+
+Route::prefix('projects')->namespace('Projects')->group(function(){
+
+    Route::get('/', 'ProjectsController@index');
+    Route::get('/create', 'ProjectsController@create');
+    Route::post('/store', 'ProjectsController@store');
+    Route::get('/edit/{id}', 'ProjectsController@edit');
+    Route::put('/update', 'ProjectsController@update');
+    Route::get('/create/delete/{id}', 'ProjectsController@delete');
+
+});
