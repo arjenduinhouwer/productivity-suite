@@ -4,7 +4,11 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/issues">Issues</a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="/projects">Projects</a>
             </li>
@@ -12,5 +16,9 @@
                 <a class="nav-link" href="/tasks">Tasks <span class="badge badge-secondary">{{App\Task::where('Due', \Carbon\Carbon::today())->where('solved', false)->count()}}</span></a>
             </li>
         </ul>
+
+
+        <a href="/logout">Logout</a>
+
     </div>
 </nav>

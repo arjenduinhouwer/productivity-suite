@@ -40,8 +40,12 @@
                             </p>
                         </div>
 
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: <?php echo rand(10, 100); ?>%" aria-valuenow="<?php echo rand(10, 100); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+
                         <div class="col-md-12 text-right">
-                            <a href="/projects/edit/{{$project->id}}">Edit</a> | <a href="/projects/delete/{{$project->id}}">Delete</a>
+                            <a href="/tasks/create/{{$project->id}}">Add Task</a> | <a href="/projects/edit/{{$project->id}}">Edit</a> | <a href="/projects/delete/{{$project->id}}">Delete</a>
                         </div>
                     </div>
                 @endforeach
