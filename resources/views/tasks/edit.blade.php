@@ -1,13 +1,16 @@
 @extends('layout')
-@section('title', 'Projects')
+@section('title', 'Tasks')
 
 @section('content')
-    <div class="col-md-6 col-md-offset-3">
-        <h1 class="page-header">Edit {{$project->name}}</h1>
-        <a href="/projects">Back</a>
+    <div class="row justify-content-md-center">
 
-        {!! Form::model($project, ['url' => '/projects/update', 'method' => 'PUT']) !!}
-            @include('projects.form')
-        {!! Form::close() !!}
+        <div class="col-md-6">
+            <h1 class="page-header">Edit {{$task->name}}</h1>
+            <a href="/tasks">Back</a>
+
+            {!! Form::model($task, ['url' => '/tasks/update/' . $task->id, 'method' => 'PUT']) !!}
+                @include('tasks.form')
+            {!! Form::close() !!}
+        </div>
     </div>
 @stop

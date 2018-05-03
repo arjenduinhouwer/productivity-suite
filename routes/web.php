@@ -71,7 +71,7 @@ Route::prefix('projects')->namespace('Projects')->group(function(){
     Route::get('/create', 'ProjectsController@create');
     Route::post('/store', 'ProjectsController@store');
     Route::get('/edit/{id}', 'ProjectsController@edit');
-    Route::put('/update', 'ProjectsController@update');
+    Route::put('/update/{id}', 'ProjectsController@update');
     Route::get('/create/delete/{id}', 'ProjectsController@delete');
 
 });
@@ -82,7 +82,7 @@ Route::prefix('tasks')->group(function(){
     Route::get('/create', 'TasksController@create');
     Route::post('/store', 'TasksController@store');
     Route::get('/edit/{id}', 'TasksController@edit');
-    Route::put('/update', 'TasksController@update');
+    Route::put('/update/{id}', 'TasksController@update');
     Route::get('/create/delete/{id}', 'TasksController@delete');
 
     route::get('solve/{id}', 'TasksController@solveTask');

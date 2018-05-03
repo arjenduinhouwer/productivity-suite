@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,15 +16,15 @@ class TasksController extends Controller
      */
     public function index()
     {
-
-        $tasks = Task::where('solved', false)
-            ->orderBy('due')
+        $dates = Task::where('solved', false)
             ->orderBy('priority', 'DESC')
-//            ->groupBy('due')
-//            ->having('due', '>=', Carbon::today())
-            ->get();
+            ->orderBy('due', 'ASC')
+            ->get()
+            ->groupBy(function($task) {
+                return Carbon::parse($task->due)->format('d-m-Y');
+            });
 
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('dates'));
     }
 
     /**
@@ -61,7 +62,7 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::findOrFail($id);
     }
 
     /**
@@ -72,7 +73,9 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        return view('tasks.edit', compact('task'));
     }
 
     /**
@@ -84,7 +87,13 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        $task->fill($request->all());
+
+        $task->save();
+
+        return redirect('/tasks');
     }
 
     /**
@@ -95,7 +104,9 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        return redirect('/tasks');
+
     }
 
     public function solveTask($id)
