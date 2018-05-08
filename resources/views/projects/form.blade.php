@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="/css/bootstrap-datepicker3.min.css">
+<script src="/js/bootstrap-datepicker.min.js"></script>
+
 <div class="form-group">
     {!! Form::label('name','Name') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -21,3 +24,11 @@
 <div class="form-group">
     {!! Form::submit('Save' , ['class' => 'btn btn-primary']) !!}
 </div>
+
+<script>
+    $('#start, #end').datepicker({
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        todayBtn: "linked"
+    });
+</script>

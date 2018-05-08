@@ -84,7 +84,7 @@ Route::prefix('tasks')->group(function(){
     Route::get('/edit/{id}', 'TasksController@edit');
     Route::put('/update/{id}', 'TasksController@update');
     Route::get('/{id}/shift', 'TasksController@shift');
-    Route::get('/create/delete/{id}', 'TasksController@delete');
+    Route::get('/delete/{id}', 'TasksController@destroy');
 
     route::get('solve/{id}', 'TasksController@solveTask');
 

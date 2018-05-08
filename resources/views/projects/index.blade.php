@@ -11,7 +11,7 @@
 
     <div class="row justify-content-md-center">
         <div class="col-md-6">
-            <h1 class="page-header">Projects</h1>
+            <h1 class="display-1">Projects</h1>
 
             <a type="button" class="btn btn-primary" href="/projects/create">Create</a>
         </div>

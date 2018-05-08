@@ -54,6 +54,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
                                         <a class="dropdown-item" href="/tasks/{{$task->id}}/shift">Shift 1 day</a>
+                                        <a class="dropdown-item" href="/tasks/delete/{{$task->id}}">Delete</a>
                                     </div>
                                 </div>
                             </td>
