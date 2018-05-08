@@ -109,6 +109,18 @@ class TasksController extends Controller
 
     }
 
+    public function shift($id)
+    {
+        $task = Task::findOrFail($id);
+
+        $task->due = Carbon::parse($task->due)->addDays(1);
+
+        $task->save();
+
+        return redirect('/tasks');
+
+    }
+
     public function solveTask($id)
     {
         $task = Task::findOrFail($id);
